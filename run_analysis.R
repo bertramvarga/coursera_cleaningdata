@@ -30,7 +30,11 @@ ensureData = function(){
   }
 }
 
-#' Merges the Test and Train folders of the dataset into the Merged folder
+#' Merging Train and Test data
+#' 
+#'
+#'
+#' @examples
 mergeData = function(){
 
   if(dir.exists(mergeRoot)){
@@ -57,9 +61,15 @@ mergeData = function(){
 }
 
 
+
 #' Loads the partial UCI HAR dataset, containing only the means, standard deviations, subjects and activity labels.
 #' @see http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
-loadUciHarDataSet = function(){
+#'
+#' @return
+#' @export
+#'
+#' @examples
+LoadUciHarDataSet <- function(){
    rowLimit = -1
 
    ensureData()
@@ -85,19 +95,34 @@ loadUciHarDataSet = function(){
 }
 
 
-calculateAveragesForSubjectAndCategory = function(dd){
-  dt = data.table(dd);
+#' Generates a dataset based on the UCI HAR Dataset that contains the average for every mean and std variable grouped by Subject and Activity
+#'
+#' @param uciHarDataFrame The UCI HAR data containing only numerical columns plus "subjectId" and "category"
+#'
+#' @return The grouped and averaged
+#' @export
+#'
+#' @examples
+CalculateAveragesForSubjectAndCategory <- function(uciHarDataFrame){
+  dt = data.table(uciHarDataFrame);
   newData = dt[, lapply(.SD, mean), by=list(category, subjectId)]
   colNames = names(newData)[names(newData)!="subjectId"& names(newData)!="category"]
   newColnames = paste(colNames,".avg", sep = "")
   setnames(newData, colNames, newColnames)
+  newData
 }
 
 # ==========================================================================================
 #   ENTRY POINT
 # ==========================================================================================
-run = function(){
-  data = loadUciHarDataSet()
-  data_averges = calculateAveragesForSubjectAndCategory(data)
-  write.csv(data_averges, "sensorVariableAverages-BySubjectAndActivity.csv")
+#' Generates and saves a dataset based on the UCI HAR Dataset that contains the average for every mean and std variable grouped by Subject and Activity
+#'
+#' @return Name of the file containing the partial dataset
+#'
+GeneratePartialUciHarDataSet = function(){
+  fileName = "sensorVariableAverages-BySubjectAndActivity.csv";
+  data = LoadUciHarDataSet()
+  data_averges = CalculateAveragesForSubjectAndCategory(data)
+  write.csv(data_averges, fileName)
+  fileName
 }
