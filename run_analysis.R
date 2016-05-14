@@ -120,9 +120,9 @@ CalculateAveragesForSubjectAndCategory <- function(uciHarDataFrame){
 #' @return Name of the file containing the partial dataset
 #'
 GeneratePartialUciHarDataSet = function(){
-  fileName = "sensorVariableAverages-BySubjectAndActivity.csv";
+  fileName = "sensorVariableAverages-BySubjectAndActivity.txt";
   data = LoadUciHarDataSet()
   data_averges = CalculateAveragesForSubjectAndCategory(data)
-  write.csv(data_averges, fileName)
+  write.table(data_averges, fileName,row.names = FALSE)
   fileName
 }
