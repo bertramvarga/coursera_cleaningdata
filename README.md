@@ -1,4 +1,4 @@
-# coursera_cleaningdata
+# Coursera DataCleaning course final work
 
 Original source: https://www.coursera.org/learn/data-cleaning/peer/FIZtT/getting-and-cleaning-data-course-project
 
@@ -11,7 +11,9 @@ Here are the data for the project:
 https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
 
 ## The Script
+
 R script called run_analysis.R does the following:
+
 1. Merges the training and the test sets to create one data set.
 1. Extracts only the measurements on the mean and standard deviation for each measurement.
 1. Uses descriptive activity names to name the activities in the data set
